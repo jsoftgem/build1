@@ -1,0 +1,13 @@
+.user-selection {
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+    display: flex;
+    align-items: center;
+    .user-selection-container {
+      margin: auto;
+    }
+    button  {
+            height: 150px;
+            width: 150px;
+    }
+}

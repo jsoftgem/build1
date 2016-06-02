@@ -1,13 +1,28 @@
 import {Component} from "@angular/core";
-
+import {UserSelectionComponent} from "./user-selection/user-selection.component";
+import {FsdMapComponent} from "./fsd-map/fsd-map.component";
+import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "@angular/router-deprecated";
 @Component({
     selector: "fsd-app",
     template: `
-        <div class="row">
-            <h1 class="jumbotron">Fsd App</h1>
-        </div>
-    `
+        <router-outlet></router-outlet>
+    `,
+    directives: [ROUTER_DIRECTIVES],
+    providers: [ROUTER_PROVIDERS]
 })
+@RouteConfig([
+    {
+        path: "/select-type",
+        name: "SelectType",
+        component: UserSelectionComponent,
+        useAsDefault: true
+    },
+    {
+        path: "/fsd-map",
+        name: "FsdMap",
+        component: FsdMapComponent
+    }
+])
 export class FsdAppComponent {
-
+    selectedUser: string;
 }

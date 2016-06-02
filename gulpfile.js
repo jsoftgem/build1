@@ -110,8 +110,8 @@ gulp.task('compile-sass', function () {
 /* BUILD */
 
 gulp.task('watch', function () {
-    return gulp.watch(['src/**/*.ts', 'src/server.ts', './gulpfile.js', './config/**/*.js'], function (event) {
-        runSequence('tslint-client', 'tslint-server', 'compile-server', 'compile-client', 'test-server');
+    return gulp.watch(['src/**/*.ts', 'src/**/*.scss', 'src/server.ts', './gulpfile.js', './config/**/*.js'], function (event) {
+        runSequence('tslint-server', 'compile-server', 'test-server', 'tslint-client', 'compile-client', 'test-client', 'compile-sass');
         server.notify(event);
     });
 });
