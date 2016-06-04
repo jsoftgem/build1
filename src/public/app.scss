@@ -1,9 +1,14 @@
+@import "app.variables";
 @import "./fsd-app/fsd-app";
 @import "./fsd-app/user-selection/user-selection";
 @import "./fsd-app/fsd-map/fsd-map";
+@import "./fsd-app/fsd-sidebar/fsd-sidebar";
+
 body{
     background-color:whitesmoke;
 }
+
 * {
     border-radius: 1px !important;
 }
+

@@ -1,4 +1,4 @@
-(function (global) {
+(function(global) {
     // map tells the System loader where to look for things
     var map = {
         'app': 'js', // 'dist',
@@ -8,10 +8,10 @@
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
-        'app': {
+        app: {
             defaultExtension: 'js'
         },
-        'rxjs': {
+        rxjs: {
             defaultExtension: 'js'
         },
         'angular2-in-memory-web-api': {
@@ -30,7 +30,7 @@
         'upgrade',
     ];
     // Add package entries for angular packages
-    ngPackageNames.forEach(function (pkgName) {
+    ngPackageNames.forEach(function(pkgName) {
         packages['@angular/' + pkgName] = {
             main: pkgName + '.umd.js',
             defaultExtension: 'js'
@@ -51,9 +51,12 @@
         'esri/layers/GraphicsLayer',
         "esri/geometry/Point",
         'esri/symbols/SimpleMarkerSymbol',
+        'esri/symbols/TextSymbol',
         'esri/Graphic',
+        'esri/widgets/Track',
+        'esri/widgets/Compass',
         'dojo/domReady!'
-    ], function () {
+    ], function() {
         // then bootstrap application
         System.import('app/boot')
             .then(null, console.error.bind(console));

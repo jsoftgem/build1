@@ -13,7 +13,9 @@ module.exports = {
         name: 'public.js'
     },
     css: {
-        src: ['node_modules/bootstrap/dist/css/bootstrap.css',
+        src: [
+            'node_modules/animate.css/animate.css',
+            'node_modules/bootstrap/dist/css/bootstrap.css',
             'node_modules/bootstrap/dist/css/bootstrap-theme.css'],
         dest: path.join(configVariable.dist, configVariable.vendor),
         name: 'public.css'

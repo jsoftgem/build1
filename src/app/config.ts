@@ -16,4 +16,8 @@ export class Index {
     system_angular: string = path.join(__dirname, "..", "..", "node_modules", "@angular");
     system_angular2_in_memory_web_api: string = path.join(__dirname, "..", "..", "node_modules", "angular2-in-memory-web-api");
     system_rxjs: string = path.join(__dirname, "..", "..", "node_modules", "rxjs");
-} 
+}
+
+export class EsriMap {
+    url: RegExp = /(http(s?)*:\/\/js.arcgis.com\/4.0)*/i;
+}
