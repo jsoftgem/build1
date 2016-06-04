@@ -8,7 +8,7 @@ import {FsdSidebarComponent} from "./fsd-sidebar/fsd-sidebar.component";
     selector: "fsd-app",
     template: `
         <router-outlet></router-outlet>
-        <fsd-sidebar auto-height></fsd-sidebar>
+        <fsd-sidebar auto-height></fsd-sidebar>,
     `,
     directives: [ROUTER_DIRECTIVES, FsdSidebarComponent, AutoHeight],
     providers: [ROUTER_PROVIDERS]
