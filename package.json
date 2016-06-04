@@ -8,7 +8,8 @@
     "tsd": "./node_modules/.bin/tsd",
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "./node_modules/.bin/gulp",
-    "start": "node ./dist/app/server"
+    "start": "node ./dist/app/server",
+    "postinstall": "tsd install"
   },
   "keywords": [
     "guild",
@@ -62,6 +63,7 @@
     "animate.css": "^3.5.1",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "font-awesome": "^4.6.3",
     "jquery": "^2.2.4",
     "mongoose": "^4.4.19",
     "morgan": "^1.7.0",

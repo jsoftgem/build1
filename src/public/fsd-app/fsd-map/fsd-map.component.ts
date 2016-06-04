@@ -15,21 +15,25 @@ import {FsdSidebarService} from "../fsd-sidebar/fsd-sidebar.service";
 export class FsdMapComponent implements OnInit {
     constructor(private params: RouteParams, private locationService: LocationService, private arcgisMapService: ArgcisMapService, private fsdSidebarService: FsdSidebarService) { }
     ngOnInit() {
+        this.fsdSidebarService.closeSidebar();
         let resultMap: any = this.arcgisMapService.createMap({
-                basemap: "osm",
-                container: "fsdMap"
+            basemap: "osm",
+            container: "fsdMap"
         });
-        resultMap.view.on("click", this.onClick);
+        resultMap.view.on("click", (pointer: any) => {
+            this.fsdSidebarService.openSidebar();
+            console.log("click", this.fsdSidebarService);
+        });
         this.arcgisMapService.createSearch(resultMap.view);
         this.arcgisMapService.createTrack(resultMap.view);
         this.arcgisMapService.createCompass(resultMap.view);
-        return this.locationService.getLocation({ timeout: 10000 }).subscribe((location: any) => {        
+        return this.locationService.getLocation({ timeout: 10000 }).subscribe((location: any) => {
             this.arcgisMapService.goToLocation([location.coords.longitude, location.coords.latitude], resultMap.view, (response: any) => {
                 this.arcgisMapService.createCurrentLocation(response.target, resultMap.map);
-            });        
+            });
         });
-    } 
-    onClick(pointer: any) {
-        this.fsdSidebarService.openSidebar();
+    }
+    routerCanDeactivate() {
+        this.fsdSidebarService.closeSidebar();
     }
 }    

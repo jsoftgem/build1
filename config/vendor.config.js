@@ -16,12 +16,14 @@ module.exports = {
         src: [
             'node_modules/animate.css/animate.css',
             'node_modules/bootstrap/dist/css/bootstrap.css',
-            'node_modules/bootstrap/dist/css/bootstrap-theme.css'],
+            'node_modules/bootstrap/dist/css/bootstrap-theme.css',
+            'node_modules/font-awesome/css/font-awesome.css'],
         dest: path.join(configVariable.dist, configVariable.vendor),
         name: 'public.css'
     },
     font: {
-        src: ['node_modules/bootstrap/fonts/**/*'],
+        src: ['node_modules/bootstrap/fonts/**/*',
+        'node_modules/font-awesome/fonts/**/*'],
         dest: path.join(configVariable.dist, configVariable.vendor)
     }
 }

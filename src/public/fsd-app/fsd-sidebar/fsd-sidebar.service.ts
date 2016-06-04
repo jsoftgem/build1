@@ -2,20 +2,19 @@ import {Injectable} from "@angular/core";
 
 @Injectable()
 export class FsdSidebarService {
-   private fsdSidebarSelector: string = "fsd-sidebar";
-   private fsdSidebarElement: any = $(this.fsdSidebarSelector);
-   private animationEnd: string = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
-   private open: boolean = false;
+  private fsdSidebarSelector: string = "fsd-sidebar .fsd-sidebar-container";
+  private animationEnd: string = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
+  private open: boolean = false;
 
-   isOpen(): boolean {
-      return this.open;
-   }
+  isOpen(): boolean {
+    return this.open;
+  }
 
-   openSidebar() {
-     this.open = true;
-   }
+  openSidebar() {
+    $(this.fsdSidebarSelector).css("display", "block");
+  }
 
-   closeSidebar() {
-     this.open = false;
-   }
+  closeSidebar() {
+    $(this.fsdSidebarSelector).css("display", "none");
+  }
 }

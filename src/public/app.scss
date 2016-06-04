@@ -3,8 +3,10 @@
 @import "./fsd-app/user-selection/user-selection";
 @import "./fsd-app/fsd-map/fsd-map";
 @import "./fsd-app/fsd-sidebar/fsd-sidebar";
+@import url(https://fonts.googleapis.com/css?family=Bitter);
 
 body{
+   font-family: 'Bitter', serif;
     background-color:whitesmoke;
 }
 
