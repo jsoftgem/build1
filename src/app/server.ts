@@ -2,14 +2,13 @@ import express = require("express");
 import mongoose = require("mongoose");
 import morgan = require("morgan");
 import bodyParser = require("body-parser");
-import {Database, Index, EsriMap} from "./config";
+import {Database, Index} from "./config";
 import path = require("path");
 import {AppRoutes} from "./app.routes";
 import request = require("request");
 const app = express();
 let db = new Database();
 let index = new Index();
-let esriMap = new EsriMap();
 
 const PORT = process.env.port || 3000;
 mongoose.connect(db.url);

@@ -1,4 +1,5 @@
 fsd-sidebar {
+  .fsd-sidebar-container {
     width: 35%;
     z-index: 10000;
     position: fixed;
@@ -6,4 +7,5 @@ fsd-sidebar {
     background: $fsd-primary-color;
     top: 0;
     right: 0;
+  }
 }
