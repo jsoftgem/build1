@@ -17,7 +17,7 @@ import {Point} from "esri";
 export class FsdSidebarComponent {
   @Output() onClose = new EventEmitter();
   @Output() onOpen = new EventEmitter();
-  active: boolean = false;
+  active: Boolean = false;
   userType: string;
   pointer: Point;
   openSidebar(pointer: Point) {
