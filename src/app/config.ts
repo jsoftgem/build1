@@ -8,6 +8,7 @@ export class Database {
 }
 
 export class Index {
+    app_assets: string = path.join(__dirname, "..", "..", "assets");
     app_js: string = path.join(__dirname, "..", "..", "dist", "public");
     app_css: string = path.join(__dirname, "..", "..", "dist", "public");
     vendor_js: string = path.join(__dirname, "..", "..", "dist", "vendor");

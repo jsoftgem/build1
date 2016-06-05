@@ -4,8 +4,7 @@ import {Injectable} from "@angular/core";
 export class FsdSidebarService {
   private fsdSidebarSelector: string = "fsd-sidebar .fsd-sidebar-container";
   private animationEnd: string = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
-  private open: boolean = false;
-
+  public userType: string;
   isOpen(): boolean {
     return this.open;
   }

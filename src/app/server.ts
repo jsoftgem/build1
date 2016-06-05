@@ -32,6 +32,7 @@ app.use("/font", express.static(index.vendor_font));
 app.use("/js", express.static(index.app_js));
 app.use("/css", express.static(index.app_css));
 app.use("/system.config.js", express.static(index.system_config));
+app.use("/assets", express.static(index.app_assets));
 app.get("/fsd", (req, res) => {
     res.sendFile(index.html);
 });
