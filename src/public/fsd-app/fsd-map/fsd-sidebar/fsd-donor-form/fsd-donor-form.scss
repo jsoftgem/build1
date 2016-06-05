@@ -1,8 +1,19 @@
 fsd-donor-form {
     .ng-valid[required] {
-     border-left: 5px solid #42A948;
+     border-left: 5px solid lighten(#42A948, 1.5);
+    }
+    .valid {
+     border-left: 5px solid lighten(#42A948, 1.5);
     }
     .ng-invalid {
-     border-left: 5px solid #a94442;
+     border-left: 5px solid lighten(lightsalmon, 1.5);
+    }
+    .invalid {
+     border-left: 5px solid lighten(lightsalmon, 1.5) !important;
+    }
+    .error-msg {
+        font-size: 12px;
+        color: black;
+        font-weight: bold;
     }
 }

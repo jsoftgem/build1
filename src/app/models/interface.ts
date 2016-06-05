@@ -9,7 +9,7 @@ export interface Donor extends mongoose.Document {
 }
 
 export interface DonorLocation extends mongoose.Document {
-    _donorId: any;
+    _donorId?: any;
     x: Number;
     y: Number;
     z: Number;
