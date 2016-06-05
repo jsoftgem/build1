@@ -9,8 +9,16 @@ let DonorLocationSchema = new mongoose.Schema({
     x: Number,
     y: Number,
     z: Number,
-    long: Number,
-    lat: Number
+    latitude: Number,
+    longitude: Number,
+    hasM: Boolean,
+    hasZ: Boolean,
+    m: Number,
+    sr_isWGS84: Boolean,
+    sr_isWebMercator: Boolean,
+    sr_isWrappable: Boolean,
+    sr_latestWkid: Number,
+    sr_wkid: Number
 });
 
 export = mongoose.model<DonorLocation>("donor-location", DonorLocationSchema);

@@ -56,6 +56,7 @@
         'esri/widgets/Track',
         'esri/widgets/Compass',
         'esri/symbols/PictureMarkerSymbol',
+        'esri/layers/StreamLayer',
         'dojo/domReady!'
     ], function() {
         // then bootstrap application

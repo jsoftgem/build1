@@ -73,11 +73,12 @@ gulp.task('copy-client-font-vendor', function() {
 gulp.task('compile-client', function() {
     return gulp.src(appConfig.app.src)
         .pipe(ts({
-            module: "amd",
             target: 'es5',
+            module: 'amd',
             moduleResolution: 'node',
             sourceMap: true,
             emitDecoratorMetadata: true,
+            experimentalDecorators: true,
             removeComments: false,
             noImplicitAny: false
         })).pipe(gulp.dest(appConfig.app.dist));

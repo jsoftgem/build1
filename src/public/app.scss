@@ -2,11 +2,12 @@
 @import "./fsd-app/fsd-app";
 @import "./fsd-app/user-selection/user-selection";
 @import "./fsd-app/fsd-map/fsd-map";
-@import "./fsd-app/fsd-sidebar/fsd-sidebar";
-@import url(https://fonts.googleapis.com/css?family=Bitter);
+@import "./fsd-app/fsd-map/fsd-sidebar/fsd-sidebar";
+@import "./fsd-app/fsd-map/fsd-sidebar/fsd-donor-form/fsd-donor-form";
+@import url(https://fonts.googleapis.com/css?family=Montserrat);
 
 body{
-   font-family: 'Bitter', serif;
+    font-family: 'Montserrat', sans-serif;
     background-color:whitesmoke;
 }
 

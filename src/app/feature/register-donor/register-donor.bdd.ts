@@ -51,8 +51,8 @@ describe("Register donor BDD", () => {
                     x: 1,
                     y: 2,
                     z: 3,
-                    long: 123.21,
-                    lat: 435.234
+                    longitude: 123.21,
+                    latitude: 435.234
                 };
                 registerDonorDto.setDonorLocation(donorLocation);
             });
@@ -72,6 +72,7 @@ describe("Register donor BDD", () => {
                     expect(persistedRegisterDonorDTO.getDonor().contactNumber).to.equal("0090 234 9344 434");
                     expect(persistedRegisterDonorDTO.getDonor().emailAddress).to.equal("rickzx98@gmail.com");
                     expect(persistedRegisterDonorDTO.getDonor().bloodGroup).to.equal("O");
+                    expect(persistedRegisterDonorDTO.getDonorLocation()._donorId).to.equal(persistedRegisterDonorDTO.getDonor().id);
                 });
             });
         });

@@ -1,8 +1,26 @@
 import {Injectable} from "@angular/core";
 import {Map, MapView, Search, GraphicsLayer, Point, SimpleMarkerSymbol,
-    Graphic, TextSymbol, Track, Compass, PictureMarkerSymbol} from "esri";
+    Graphic, TextSymbol, Track, Compass, PictureMarkerSymbol, StreamLayer} from "esri";
 @Injectable()
 export class ArgcisMapService {
+    private indicatorGraphicsLayer: GraphicsLayer = new GraphicsLayer();
+    createMap(opts: any, userType: string): { map: Map, view: MapView } {
+        let map = new Map({
+            basemap: opts.basemap,
+        });
+        let mapView = new MapView({
+            container: opts.container,
+            map: map,
+            scale: 2400
+        });
+        if (userType === "donor") {
+            map.add(this.indicatorGraphicsLayer);
+        }
+        return {
+            map: map,
+            view: mapView
+        };
+    }
     createSearch(view: MapView) {
         let searchWidget = new Search({
             view: view
@@ -46,8 +64,8 @@ export class ArgcisMapService {
             geometry: point,
             symbol: textSymbol
         });
-        view.graphics.add(pointGraphic, 0);
-        view.graphics.add(textGraphic, 1);
+        view.graphics.add(pointGraphic);
+        view.graphics.add(textGraphic);
     }
     createTrack(view: MapView) {
         let trackWidget = new Track({
@@ -58,22 +76,6 @@ export class ArgcisMapService {
             index: 1
         });
     }
-    createMap(opts: any, viewCallback?: (callback?, errback?, progback?) => void): { map: Map, view: MapView } {
-        let map = new Map({
-            basemap: opts.basemap
-        });
-        let mapView = new MapView({
-            container: opts.container,
-            map: map,
-            scale: 2400
-        });
-        mapView.then(viewCallback);
-        map.add(new GraphicsLayer());
-        return {
-            map: map,
-            view: mapView
-        };
-    }
     createCompass(view: MapView) {
         let compassWidget = new Compass({
             view: view
@@ -83,22 +85,33 @@ export class ArgcisMapService {
             index: 2
         });
     }
-    createSelectedLocationMark(view: MapView, pointer: Point) {
+    createSelectedLocationMark(map: Map, pointer: Point) {
+        this.indicatorGraphicsLayer.removeAll();
         let pictureMarkerSymbol = new PictureMarkerSymbol({
-            url: "assets/icon/map_component_icon_blood.png",
-            width: "8px",
-            height: "8px"
+            url: "assets/icons/map_component_icon_blood.png",
+            width: "24px",
+            height: "24px"
+        });
+        let markerSymbol = new SimpleMarkerSymbol({
+            color: [226, 119, 40],
+            outline: {
+                color: [255, 255, 255],
+                width: 2
+            }
         });
         let pictureGraphic = new Graphic({
-            geometry: pointer,
+            geometry: pointer.mapPoint,
             symbol: pictureMarkerSymbol
         });
-        view.graphics.add(pictureGraphic);
+        this.indicatorGraphicsLayer.add(pictureGraphic);
     }
     goToLocation(coordinates: Number[], view: MapView, callBack: any) {
         view.goTo({
             target: coordinates,
             scale: view.scale
         }).then(callBack);
+    }
+    clearIndicatorGraphicsLayer() {
+        this.indicatorGraphicsLayer.removeAll();
     }
 }

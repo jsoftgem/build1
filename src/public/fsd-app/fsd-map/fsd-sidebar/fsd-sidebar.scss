@@ -1,0 +1,41 @@
+fsd-sidebar {
+  .fsd-sidebar-container {
+     /* Custom, iPhone Retina */ 
+    @media only screen and (min-width : 320px) {
+         width: 98%;
+    }
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (min-width : 480px) {
+         width: 98%;
+    }
+    /* Small Devices, Tablets */
+    @media only screen and (min-width : 768px) {
+       width: 50%;
+    }
+    /* Medium Devices, Desktops */
+    @media only screen and (min-width : 992px) {
+      width: 35%;
+    }
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width : 1200px) {
+      width: 35%;
+    }
+    padding: 5px 20px 10px 20px;
+    z-index: 10000;
+    position: fixed;
+    opacity: 0.78;
+    background: $fsd-primary-color;
+    top: 0;
+    right: 0;
+    .fsd-sidebar-form {   
+     margin:auto;  
+     margin-top: 40px;
+    }
+    .fsd-sidebar-close {
+      color: lightsalmon;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 24px;
+    }
+  }
+}

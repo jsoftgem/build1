@@ -36,7 +36,6 @@ app.use("/assets", express.static(index.app_assets));
 app.get("/fsd", (req, res) => {
     res.sendFile(index.html);
 });
-
 app.use("/@angular", express.static(index.system_angular));
 app.use("/angular2-in-memory-web-api", express.static(index.system_angular2_in_memory_web_api));
 app.use("/rxjs", express.static(index.system_rxjs));

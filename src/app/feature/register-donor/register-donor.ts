@@ -11,7 +11,7 @@ export class RegisterDonor {
             } else {
                 let persistedRegisterDTO: RegisterDonorDTO = new RegisterDonorDTO();
                 persistedRegisterDTO.setDonor(donor);
-                registerDonorDTO.getDonorLocation()._donorId = donor._id;
+                registerDonorDTO.getDonorLocation()._donorId = donor.id;
                 new CreateDonorLocation().execute(registerDonorDTO.getDonorLocation(), (err, donorLocation) => {
                     if (err) {
                         callback(err);
