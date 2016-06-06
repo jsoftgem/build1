@@ -3,3 +3,4 @@ typings
 .idea
 dist
 bower_components
+junitresults.xml
