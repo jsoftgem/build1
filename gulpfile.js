@@ -6,11 +6,11 @@ const filter = require('gulp-filter');
 const tslint = require('gulp-tslint');
 const server = require('gulp-express');
 const concat = require('gulp-concat');
-const jasmine = require('gulp-jasmine');
-const reporters = require('jasmine-reporters');
 const sass = require('gulp-sass');
 const vendorConfig = require('./config/vendor.config');
 const appConfig = require('./config/app.config');
+const jasmineBrowser = require('gulp-jasmine-browser');
+const Server = require('karma').Server;
 
 gulp.task('default', function() {
     runSequence('develop-client', 'develop-server');
@@ -97,12 +97,11 @@ gulp.task('watch-client', function() {
     });
 });
 
-gulp.task('test-client', function() {
-    return gulp.src(appConfig.app.test)
-        .pipe(jasmine({
-            reporter: new reporters.JUnitXmlReporter(),
-            errorOnFail: true
-        }));
+gulp.task('test-client', function(done) {
+    new Server({
+        configFile: appConfig.karamConfig.file,
+        singleRun: true
+    }, done).start();
 });
 
 gulp.task('compile-sass', function() {
