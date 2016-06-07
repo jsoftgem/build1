@@ -7,13 +7,37 @@ const tslint = require('gulp-tslint');
 const server = require('gulp-express');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
+const variableConfig = require('./config/variable.config');
 const vendorConfig = require('./config/vendor.config');
 const appConfig = require('./config/app.config');
 const jasmineBrowser = require('gulp-jasmine-browser');
 const Server = require('karma').Server;
+const clean = require('gulp-clean');
+const path = require('path');
 
 gulp.task('default', function() {
-    runSequence('develop-client', 'develop-server');
+    runSequence('clean', 'concat-client-vendor', 'concat-client-css-vendor', 'copy-client-font-vendor', 'tslint-client', 'compile-client', 'test-client', 'compile-sass', 'tslint-server', 'compile-server', 'test-server', 'run-server', 'watch');
+});
+
+gulp.task('clean', function() {
+    return gulp.src(path.join(variableConfig.dist))
+        .pipe(clean({
+            force: true
+        }));
+});
+
+gulp.task('clean-client', function() {
+    return gulp.src(path.join(variableConfig.dist, variableConfig.client))
+        .pipe(clean({
+            force: true
+        }));
+});
+
+gulp.task('clean-server', function() {
+    return gulp.src(path.join(variableConfig.dist, variableConfig.server))
+        .pipe(clean({
+            force: true
+        }));
 });
 
 /* SERVER */
@@ -121,9 +145,9 @@ gulp.task('watch', function() {
 });
 
 gulp.task('develop-client', function() {
-    runSequence('concat-client-vendor', 'concat-client-css-vendor', 'copy-client-font-vendor', 'tslint-client', 'compile-client', 'test-client', 'compile-sass');
+    runSequence('clean-client', 'concat-client-vendor', 'concat-client-css-vendor', 'copy-client-font-vendor', 'tslint-client', 'compile-client', 'test-client', 'compile-sass', 'watch');
 });
 
 gulp.task('develop-server', function() {
-    runSequence('tslint-server', 'compile-server', 'test-server', 'run-server', 'watch');
+    runSequence('clean-server', 'tslint-server', 'compile-server', 'test-server', 'run-server', 'watch');
 });

@@ -1,7 +1,5 @@
 import {RegisterDonor} from "./feature/register-donor/register-donor.route";
 
-export class AppRoutes {
-    constructor(private app: any) {
-        new RegisterDonor(app);
-    }
+export function AppRoutes(app) {
+    new RegisterDonor(app);
 }

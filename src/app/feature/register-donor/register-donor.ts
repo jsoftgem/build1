@@ -1,5 +1,5 @@
-import {CreateDonor} from "./conrol/create-donor";
-import {CreateDonorLocation} from "./conrol/create-donor-location";
+import {CreateDonor} from "./control/create-donor";
+import {CreateDonorLocation} from "./control/create-donor-location";
 import {RegisterDonorDTO} from "./register-donor.dto";
 import {Donor, DonorLocation} from "../../models/interface";
 

@@ -23,22 +23,37 @@ module.exports = {
         test: [
             // Polyfills.
             'node_modules/core-js/client/shim.min.js',
-
             // System.js for module loading
             'node_modules/systemjs/dist/system-polyfills.js',
             'node_modules/systemjs/dist/system.src.js',
-
             // Zone.js dependencies
             'node_modules/zone.js/dist/zone.js',
             'node_modules/zone.js/dist/jasmine-patch.js',
             'node_modules/zone.js/dist/async-test.js',
             'node_modules/zone.js/dist/fake-async-test.js',
             // RxJs.
-            'node_modules/rxjs/**/*.js',
-            'node_modules/rxjs/**/*.js.map',
-            'node_modules/@angular/**/*.js',
-            path.join(variableConfig.dist, variableConfig.client, variableConfig.client_test),
-            'config/karma.main.js'
+            {
+                pattern: 'node_modules/rxjs/**/*.js',
+                included: false,
+                watched: false
+            }, {
+                pattern: 'node_modules/rxjs/**/*.js.map',
+                included: false,
+                watched: false
+            }, {
+                pattern: 'node_modules/@angular/**/*.js',
+                included: false,
+                watched: true
+            }, {
+                pattern: path.join(variableConfig.dist, variableConfig.client, '**/*'),
+                included: false,
+                watched: true
+            },
+            'config/karma.main.js', {
+                pattern: 'node_modules/systemjs/dist/system-polyfills.js',
+                included: false,
+                watched: false
+            }
         ],
         src_watch: [path.join(variableConfig.src, variableConfig.client, variableConfig.client_src),
             path.join(variableConfig.src, variableConfig.client, '**/*.scss'),

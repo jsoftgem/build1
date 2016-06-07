@@ -2,32 +2,21 @@ const appConfig = require('./config/app.config');
 const path = require('path');
 module.exports = function(config) {
     config.set({
-
         basePath: './',
-
         frameworks: ['jasmine'],
-
         files: appConfig.app.test,
         port: 9876,
-
-        logLevel: config.LOG_INFO,
-
+        logLevel: config.LOG_ERROR,
         colors: true,
-
-        autoWatch: true,
-
         browsers: ['PhantomJS'],
-
         // Karma plugins loaded
         plugins: [
             'karma-jasmine',
             'karma-coverage',
             'karma-phantomjs-launcher'
         ],
-
         // Coverage reporter generates the coverage
         reporters: ['progress', 'dots', 'coverage'],
-
         // Source files that you wanna generate coverage for.
         // Do not include tests or libraries (these files will be instrumented by Istanbul)
         preprocessors: {

@@ -83,6 +83,7 @@ Promise.all([
             .map(file2moduleName)
             .map(function(path) {
                 return System.import(path).then(function(module) {
+                    console.log('module', module);
                     if (module.hasOwnProperty('main')) {
                         module.main();
                     } else {
