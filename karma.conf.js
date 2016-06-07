@@ -3,20 +3,11 @@ const path = require('path');
 module.exports = function(config) {
     config.set({
 
-        basePath: '.',
+        basePath: './',
 
-        frameworks: ['jasmine', 'systemjs'],
+        frameworks: ['jasmine'],
 
         files: appConfig.app.test,
-        systemjs: {
-            configFile: 'config/system.config.karma.js',
-            paths: {
-                'js': path.join(__dirname, 'dist', 'js'),
-                '@angular': path.join(__dirname, 'node_modules', '@angular'),
-                'angular2-in-memory-web-api': path.join(__dirname, 'node_modules', 'angular2-in-memory-web-api'),
-                'rxjs/': path.join(__dirname, 'node_modules', 'rxjs')
-            }
-        },
         port: 9876,
 
         logLevel: config.LOG_INFO,
@@ -31,8 +22,7 @@ module.exports = function(config) {
         plugins: [
             'karma-jasmine',
             'karma-coverage',
-            'karma-phantomjs-launcher',
-            'karma-systemjs'
+            'karma-phantomjs-launcher'
         ],
 
         // Coverage reporter generates the coverage
@@ -43,14 +33,21 @@ module.exports = function(config) {
         preprocessors: {
             'dist/**/!(*bdd).js': ['coverage']
         },
+        exclude: [
+            'node_modules/**/*spec.js'
+        ],
         coverageReporter: {
+            dir: 'coverage/',
             reporters: [{
+                type: 'text-summary'
+            }, {
                 type: 'json',
                 subdir: '.',
                 file: 'coverage-final.json'
+            }, {
+                type: 'html'
             }]
         },
-
         singleRun: true
     });
 }

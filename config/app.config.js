@@ -21,10 +21,24 @@ module.exports = {
         src_lint: path.join(variableConfig.src, variableConfig.client, variableConfig.client_src),
         src: [path.join(variableConfig.src, variableConfig.client, variableConfig.client_src)],
         test: [
-            path.join(__dirname, '..', 'node_modules', 'requirejs', 'require.js'),
-            path.join(__dirname, '..', 'node_modules', 'jasmine-core', 'lib', 'jasmine-core.js'),
-            path.join(variableConfig.dist, variableConfig.vendor, variableConfig.client + ".js"),
-            path.join(variableConfig.dist, variableConfig.client, variableConfig.client_test)
+            // Polyfills.
+            'node_modules/core-js/client/shim.min.js',
+
+            // System.js for module loading
+            'node_modules/systemjs/dist/system-polyfills.js',
+            'node_modules/systemjs/dist/system.src.js',
+
+            // Zone.js dependencies
+            'node_modules/zone.js/dist/zone.js',
+            'node_modules/zone.js/dist/jasmine-patch.js',
+            'node_modules/zone.js/dist/async-test.js',
+            'node_modules/zone.js/dist/fake-async-test.js',
+            // RxJs.
+            'node_modules/rxjs/**/*.js',
+            'node_modules/rxjs/**/*.js.map',
+            'node_modules/@angular/**/*.js',
+            path.join(variableConfig.dist, variableConfig.client, variableConfig.client_test),
+            'config/karma.main.js'
         ],
         src_watch: [path.join(variableConfig.src, variableConfig.client, variableConfig.client_src),
             path.join(variableConfig.src, variableConfig.client, '**/*.scss'),
