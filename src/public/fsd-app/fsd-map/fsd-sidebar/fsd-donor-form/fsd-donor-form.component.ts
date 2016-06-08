@@ -7,18 +7,18 @@ import {Point} from "esri";
       <div class="form-group">
         <label class="col-lg-6 col-md-6 col-sm-12 col-xs-12 control-label">
           Firstname
-          <input ngControl="firstname" [(ngModel)]="donor.firstname.model" required class="form-control" 
-          #firstname="ngForm">
-          <div [hidden]="firstname.valid || firstname.pristine" class="error-msg alert alert-danger">
-             {{donor.firstname.getErrorMsg()}}
+          <input ngControl="firstName" [(ngModel)]="donor.firstName.model" required class="form-control" 
+          #firstName="ngForm">
+          <div [hidden]="firstName.valid || firstName.pristine" class="error-msg alert alert-danger">
+             {{donor.firstName.getErrorMsg()}}
           </div>
         </label>
         <label class="col-lg-6 col-md-6 col-sm-12 col-xs-12 control-label">
           Lastname
           <input ngControl="lastname" [(ngModel)]="donor.lastname.model" required class="form-control"
           #lastname="ngForm">
-          <div [hidden]="lastname.valid || lastname.pristine" class="error-msg alert alert-danger">
-             {{donor.lastname.getErrorMsg()}}
+          <div [hidden]="lastName.valid || lastName.pristine" class="error-msg alert alert-danger">
+             {{donor.lastName.getErrorMsg()}}
           </div>
         </label>
       </div>
@@ -111,8 +111,8 @@ export class FsdDonorFormComponent implements OnInit {
 }
 export class FsdDonorImpl implements FsdDonor {
   private regex: Regex = new Regex();
-  firstname: FormModel = new FormModel(true, "First name is required");
-  lastname: FormModel = new FormModel(true, "Last name is required");
+  firstName: FormModel = new FormModel(true, "First name is required");
+  lastName: FormModel = new FormModel(true, "Last name is required");
   address: FormModel = new FormModel(true, "Address is required");
   emailAddress: FormModel = new FormModel(true, "Email is required", "Invalid email address", (model) => {
     return !!this.regex.email.test(model);
@@ -123,8 +123,8 @@ export class FsdDonorImpl implements FsdDonor {
   bloodGroup: FormModel = new FormModel(true, "Blood group is required");
   get(): FsdDonor {
     return {
-      firstname: this.firstname.model,
-      lastname: this.lastname.model,
+      firstName: this.firstName.model,
+      lastName: this.lastName.model,
       address: this.address.model,
       emailAddress: this.emailAddress.model,
       contactNumber: this.contactNumber.model,
@@ -148,8 +148,8 @@ export class FsdDonorLocation {
   sr_wkid: Number;
 }
 export interface FsdDonor {
-  firstname: any;
-  lastname: any;
+  firstName: any;
+  lastName: any;
   address: any;
   emailAddress: any;
   contactNumber: any;
