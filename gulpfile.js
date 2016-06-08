@@ -98,7 +98,7 @@ gulp.task('compile-client', function() {
     return gulp.src(appConfig.app.src)
         .pipe(ts({
             target: 'es5',
-            module: 'amd',
+            module: 'commonjs',
             moduleResolution: 'node',
             sourceMap: true,
             emitDecoratorMetadata: true,

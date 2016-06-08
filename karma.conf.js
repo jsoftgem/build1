@@ -6,14 +6,14 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
         files: appConfig.app.test,
         port: 9876,
-        logLevel: config.LOG_ERROR,
+        logLevel: config.LOG_DEBUG,
         colors: true,
-        browsers: ['PhantomJS'],
+        browsers: ['Chrome'],
         // Karma plugins loaded
         plugins: [
             'karma-jasmine',
             'karma-coverage',
-            'karma-phantomjs-launcher'
+            'karma-chrome-launcher'
         ],
         // Coverage reporter generates the coverage
         reporters: ['progress', 'dots', 'coverage'],

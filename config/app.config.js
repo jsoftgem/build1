@@ -45,15 +45,14 @@ module.exports = {
                 included: false,
                 watched: true
             }, {
-                pattern: path.join(variableConfig.dist, variableConfig.client, '**/*'),
+                pattern: path.join(variableConfig.dist, variableConfig.client, '**/*.js'),
                 included: false,
                 watched: true
-            },
-            'config/karma.main.js', {
+            }, {
                 pattern: 'node_modules/systemjs/dist/system-polyfills.js',
                 included: false,
                 watched: false
-            }
+            }, 'config/karma.main.js'
         ],
         src_watch: [path.join(variableConfig.src, variableConfig.client, variableConfig.client_src),
             path.join(variableConfig.src, variableConfig.client, '**/*.scss'),

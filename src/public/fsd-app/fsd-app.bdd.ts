@@ -1,7 +1,7 @@
 import {FsdDonor, FsdDonorImpl, FsdDonorLocation} from "./fsd-map/fsd-sidebar/fsd-donor-form/fsd-donor-form.component";
 import {
     async,
-    beforeEachProviders,
+    beforeEach,
     describe,
     expect,
     inject,
@@ -12,7 +12,7 @@ export function main() {
         let donor: FsdDonor;
         let donorLocation: FsdDonorLocation;
         describe("GIVEN: I have donor information", () => {
-            beforeEachProviders(() => {
+            beforeEach(() => {
                 donor = new FsdDonorImpl();
                 donor.firstName.model = "Jerico";
                 donor.lastName.model = "de Guzman";
@@ -22,7 +22,7 @@ export function main() {
                 donor.bloodGroup.model = "o";
             });
             describe("GIVEN: I have donor location", () => {
-                beforeEachProviders(() => {
+                beforeEach(() => {
                     donorLocation = new FsdDonorLocation();
                     donorLocation.x = 1;
                     donorLocation.y = 2;

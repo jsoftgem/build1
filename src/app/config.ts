@@ -1,10 +1,10 @@
 import path = require("path");
 
 export class Database {
-    url: string = "mongodb://127.0.0.1:27017/bloodDonorDB";
-    testUrl: string = "mongodb://127.0.0.1:27017/bloodDonorDBTest";
-    murl: string = "mongodb://fsd:fsd>@ds017231.mlab.com:17231/fsd";
-    mtestUrl: string = "mongodb://fsd:fsd@ds037283.mlab.com:37283/fsd_test";
+    murl: string = "mongodb://127.0.0.1:27017/bloodDonorDB";
+    mtestUrl: string = "mongodb://127.0.0.1:27017/bloodDonorDBTest";
+    url: string = "mongodb://fsd:fsd>@ds017231.mlab.com:17231/fsd";
+    testUrl: string = "mongodb://fsd:fsd@ds037283.mlab.com:37283/fsd_test";
 }
 
 export class Index {
