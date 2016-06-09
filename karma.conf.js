@@ -8,12 +8,12 @@ module.exports = function(config) {
         port: 9876,
         logLevel: config.LOG_DEBUG,
         colors: true,
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
         // Karma plugins loaded
         plugins: [
             'karma-jasmine',
             'karma-coverage',
-            'karma-chrome-launcher'
+            'karma-phantomjs-launcher'
         ],
         // Coverage reporter generates the coverage
         reporters: ['progress', 'dots', 'coverage'],

@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Point} from "esri";
 @Component({
   selector: "fsd-donor-form",
   template: `
@@ -82,7 +81,7 @@ import {Point} from "esri";
     </form>
   `})
 export class FsdDonorFormComponent implements OnInit {
-  @Input() pointer: Point;
+  @Input() pointer: any;
   donor: FsdDonor = new FsdDonorImpl();
   active: Boolean = false;
   ngOnInit() {
