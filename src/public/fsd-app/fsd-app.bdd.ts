@@ -30,7 +30,9 @@ export function main() {
                     donorLocation.latitude = 123.32;
                     donorLocation.longitude = 923.2;
                 });
-                it("should build without a problem", () => { });
+                describe("WHEN: submitting", () => {
+
+                });
             });
         });
     });
