@@ -6,7 +6,7 @@ module.exports = function(config) {
         frameworks: ['jasmine'],
         files: appConfig.app.test,
         port: 9876,
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_INFO,
         colors: true,
         browsers: ['PhantomJS'],
         // Karma plugins loaded

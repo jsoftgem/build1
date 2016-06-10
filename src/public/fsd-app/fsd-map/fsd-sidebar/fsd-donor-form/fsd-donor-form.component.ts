@@ -1,8 +1,23 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  EventEmitter,
+  Output
+}
+from "@angular/core";
+import {
+  FsdDonorResourceService
+}
+from "../../../services/fsd-donor-resource.service";
 @Component({
+  providers: [FsdDonorResourceService],
   selector: "fsd-donor-form",
   template: `
     <form #donorForm="ngForm" *ngIf="active" role="form" (ngSubmit)="onSubmit()" class="container-fluid">
+      <div *ngIf="error" class="error-msg alert alert-danger">
+        <span>Saving failed!</span>
+      </div>
       <div class="form-group">
         <label class="col-lg-6 col-md-6 col-sm-12 col-xs-12 control-label">
           Firstname
@@ -79,16 +94,30 @@ import {Component, Input, OnInit} from "@angular/core";
         </div>
       </div>
     </form>
-  `})
+  `
+})
 export class FsdDonorFormComponent implements OnInit {
+  @Output() onSaved: EventEmitter<any> = new EventEmitter();
   @Input() pointer: any;
   donor: FsdDonor = new FsdDonorImpl();
+  error: any;
+  private donorLocation: FsdDonorLocation;
   active: Boolean = false;
+  constructor(private fsdDonorResource: FsdDonorResourceService) { }
   ngOnInit() {
-    setTimeout(() => { this.active = true; }, 0);
+    setTimeout(() => {
+      this.active = true;
+    }, 0);
   }
   onSubmit() {
-    console.log("pointer", this.pointer);
+    this.convertPoiterToDonorLocation();
+    fsdDonorResource.register(this.createRegisterDonorInput(), (err, response) => {
+      if (err) {
+        this.error = err;
+      } else {
+         onSaved.emit(response);
+      }
+    });
   }
   private convertPoiterToDonorLocation() {
     let donorLocation = new FsdDonorLocation();
@@ -106,6 +135,15 @@ export class FsdDonorFormComponent implements OnInit {
     donorLocation.sr_isWrappable = mapPoint.spatialReference.isWrappable;
     donorLocation.sr_latestWkid = mapPoint.spatialReference.latestWkid;
     donorLocation.sr_wkid = mapPoint.spatialReference.wkid;
+  }
+  private createRegisterDonorInput(): {
+    donor: FsdDonor,
+    donorLocation: FsdDonorLocation
+  } {
+    return {
+      donor: this.donor,
+      donorLocation: this.donorLocation
+    };
   }
 }
 export class FsdDonorImpl implements FsdDonor {
@@ -157,8 +195,7 @@ export interface FsdDonor {
 export class FormModel {
   public model: any;
   private valid: Boolean = true;
-  constructor(private required?: Boolean, private errorMsg?: string, private validationMsg?: string, private validator?: (model: any) => Boolean) {
-  }
+  constructor(private required?: Boolean, private errorMsg?: string, private validationMsg?: string, private validator?: (model: any) => Boolean) {}
   getErrorMsg() {
     return this.errorMsg;
   }
@@ -171,7 +208,8 @@ export class FormModel {
   validate() {
     if (this.model && this.validator) {
       this.valid = this.validator(this.model);
-    } else {
+    }
+    else {
       this.valid = true;
     }
   }

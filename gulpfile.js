@@ -116,7 +116,7 @@ gulp.task('tslint-client', function() {
 
 gulp.task('watch-client', function() {
     return gulp.watch(appConfig.app.src_watch, function(event) {
-        runSequence('tslint-client', 'compile-client', 'compile-sass');
+        runSequence('tslint-client', 'compile-client', 'compile-sass', 'test-client');
         server.notify(event);
     });
 });
@@ -145,9 +145,9 @@ gulp.task('watch', function() {
 });
 
 gulp.task('develop-client', function() {
-    runSequence('clean-client', 'concat-client-vendor', 'concat-client-css-vendor', 'copy-client-font-vendor', 'tslint-client', 'compile-client', 'test-client', 'compile-sass', 'watch');
+    runSequence('clean-client', 'concat-client-vendor', 'concat-client-css-vendor', 'copy-client-font-vendor', 'tslint-client', 'compile-client', 'test-client', 'compile-sass', 'watch-client');
 });
 
 gulp.task('develop-server', function() {
-    runSequence('clean-server', 'tslint-server', 'compile-server', 'test-server', 'run-server', 'watch');
+    runSequence('clean-server', 'tslint-server', 'compile-server', 'test-server', 'run-server', 'watch-server');
 });
