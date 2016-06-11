@@ -98,7 +98,7 @@ gulp.task('compile-client', function() {
     return gulp.src(appConfig.app.src)
         .pipe(ts({
             target: 'es5',
-            module: 'commonjs',
+            module: 'amd',
             moduleResolution: 'node',
             sourceMap: true,
             emitDecoratorMetadata: true,
@@ -117,7 +117,6 @@ gulp.task('tslint-client', function() {
 gulp.task('watch-client', function() {
     return gulp.watch(appConfig.app.src_watch, function(event) {
         runSequence('tslint-client', 'compile-client', 'compile-sass', 'test-client');
-        server.notify(event);
     });
 });
 

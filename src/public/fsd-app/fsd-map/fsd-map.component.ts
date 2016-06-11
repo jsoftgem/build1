@@ -18,6 +18,10 @@ import {Point} from "esri";
     providers: [LocationService, ArgcisMapService]
 })
 export class FsdMapComponent implements OnInit {
+    private center: any;
+    private scale: any;
+    private spatialReference: any;
+    private rotation: any;
     @ViewChild(FsdSidebarComponent) fsdSidebar: FsdSidebarComponent;
     constructor(private routeParams: RouteParams, private locationService: LocationService, private arcgisMapService: ArgcisMapService) { }
     ngOnInit() {
@@ -44,7 +48,13 @@ export class FsdMapComponent implements OnInit {
     routerCanDeactivate() {
         this.fsdSidebar.closeSidebar();
     }
-    onSidebarClose() {
+    onSidebarClose(result) {
+        if (result && result.saved) {
+
+        }
         this.arcgisMapService.clearIndicatorGraphicsLayer();
+    }
+    onDragover() {
+        console.log("dragover", this.center);
     }
 }

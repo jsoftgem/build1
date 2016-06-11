@@ -1,6 +1,7 @@
 import {
     Http,
-    Headers
+    Headers,
+    RequestOptions
 }
 from "@angular/http";
 import {
@@ -9,11 +10,13 @@ import {
 from "@angular/core";
 @Injectable()
 export class FsdDonorResourceService {
-    constructor(http: Http) {}
+    constructor(private http: Http) {
+    }
     register(registerDonorInput: any, callback: (err: any, response?: any) => void) {
-        let headers = new Headers();
-        headers.append("Content-Type", "application/json;charset=utf-8");
-        return http.post("fsd/api/register-donor", JSON.stringify(registerDonorInput), headers)
-            .subscribe(res => callback(undefined, res), err => callback(err));
+        this.http.post("fsd/api/register-donor", JSON.stringify(registerDonorInput), new RequestOptions({
+            headers: new Headers({
+                "Content-Type": "application/json;charset=UTF-8"
+            })
+        })).subscribe(res => callback(undefined, res), err => callback(err));
     };
 }

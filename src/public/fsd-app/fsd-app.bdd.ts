@@ -30,17 +30,20 @@ import {
     XHRBackend,
     Headers,
     HTTP_PROVIDERS,
-    Response
+    ResponseOptions,
+    ConnectionBackend
 }
 from "@angular/http";
 import {
-    MockBackend
+    MockBackend,
+    MockConnection
 }
 from "@angular/http/testing";
 import {
     Injector,
     provide,
-    Component
+    Component,
+    ReflectiveInjector
 }
 from "@angular/core";
 import {
@@ -55,31 +58,51 @@ export function main() {
         let fsdFormComponent: FsdDonorFormComponent;
         let testComponent: TestFsdFormComponent;
         let tcb: TestComponentBuilder;
+        let testComponentFixture: any;
+
         beforeEachProviders(() => [HTTP_PROVIDERS,
             provide(XHRBackend, {
                 useClass: MockBackend
             }),
             TestComponentBuilder,
-            FsdDonorResourceService,
-            FsdDonorFormComponent,
             TestFsdFormComponent
         ]);
         beforeEach(inject([TestComponentBuilder], _tcb => {
             tcb = _tcb;
         }));
 
-        beforeEach(done => {
-            tcb.createAsync(TestFsdFormComponent)
-                .then((fixture: any) => {
-                    fixture.detectChanges();
-                    testComponent = fixture.componentInstance;
-                    fsdFormComponent = fixture.debugElement.children[0].componentInstance;
-                    expect(fsdFormComponent).toBeDefined();
-                    expect(testComponent).toBeDefined();
-                    done();
-                });
-        });
         describe("GIVEN: I have donor information", () => {
+            let backend: MockBackend;
+            let fsdDonorResourceService: FsdDonorResourceService;
+            beforeEach(() => {
+                let injector = ReflectiveInjector.resolveAndCreate([
+                    HTTP_PROVIDERS,
+                    BaseRequestOptions,
+                    MockBackend,
+                    FsdDonorResourceService,
+                    provide(Http, {
+                        useFactory: function (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) {
+                            return new Http(backend, defaultOptions);
+                        },
+                        deps: [MockBackend, BaseRequestOptions]
+                    }),
+                ]);
+                backend = injector.get(MockBackend);
+                fsdDonorResourceService = injector.get(FsdDonorResourceService);
+            });
+            beforeEach(done => {
+                tcb.overrideProviders(FsdDonorFormComponent, [provide(FsdDonorResourceService, { useValue: fsdDonorResourceService })])
+                    .createAsync(TestFsdFormComponent)
+                    .then((fixture: any) => {
+                        fixture.detectChanges();
+                        testComponentFixture = fixture;
+                        testComponent = fixture.componentInstance;
+                        fsdFormComponent = fixture.debugElement.children[0].componentInstance;
+                        expect(fsdFormComponent).toBeDefined();
+                        expect(testComponent).toBeDefined();
+                        done();
+                    });
+            });
             beforeEach(() => {
                 donor = new FsdDonorImpl();
                 donor.firstName.model = "Jerico";
@@ -102,20 +125,29 @@ export function main() {
                     fsdFormComponent.pointer = pointer;
                 });
                 describe("WHEN: submitting successfully", () => {
-                    beforeEach((done) => {
-                        testComponent.onSaved = (response) => {
-                            console.log("response", response);
+                    beforeEach(() => {
+                        let connection: any;
+                        backend.connections.subscribe((c: any) => connection = c);
+                        fsdFormComponent.onSubmit();
+                        connection.mockRespond(new Response(
+                            new ResponseOptions({
+                                status: 200,
+                                body: registerDonorMockResponse
+                            })
+                        ));
+                    });
+                    it("THEN: On saved event is triggered", done => {
+                        testComponent.onSaved = (response: any) => {
                             done();
                         };
-                        fsdFormComponent.onSubmit();
                     });
-                    it("THEN: Donor is return with object id", () => {});
                 });
             });
         });
     });
     const registerDonorMockResponse = {
         donor: {
+            _id: "1",
             firstName: "Jerico",
             lastName: "de Guzman",
             contactNumber: "0099 234 2345 234",
@@ -124,6 +156,7 @@ export function main() {
             bloodGroup: "o"
         },
         donorLocation: {
+            donorId: "1",
             x: 1,
             y: 2,
             z: 10,
@@ -137,10 +170,23 @@ export function main() {
 @Component({
     selector: "test-fsd-form",
     template: `<fsd-donor-form (onSaved)="onSaved($event)" [(pointer)]="pointer"></fsd-donor-form>`,
-    directives: [FsdDonorFormComponent]
+    directives: [FsdDonorFormComponent],
+    providers: [
+        HTTP_PROVIDERS,
+        BaseRequestOptions,
+        MockBackend,
+        provide(Http, {
+            useFactory: function (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) {
+                return new Http(backend, defaultOptions);
+            },
+            deps: [MockBackend, BaseRequestOptions]
+        })
+    ]
 })
-
 export class TestFsdFormComponent {
-    onSaved(response: any) {}
+    donor: any;
+    donorLocation: any;
+    onSaved(response: any) {
+    }
     pointer: any;
 }

@@ -16,7 +16,7 @@ from "../../../services/fsd-donor-resource.service";
   template: `
     <form #donorForm="ngForm" *ngIf="active" role="form" (ngSubmit)="onSubmit()" class="container-fluid">
       <div *ngIf="error" class="error-msg alert alert-danger">
-        <span>Saving failed!</span>
+        <p>Saving failed.</p>
       </div>
       <div class="form-group">
         <label class="col-lg-6 col-md-6 col-sm-12 col-xs-12 control-label">
@@ -29,8 +29,8 @@ from "../../../services/fsd-donor-resource.service";
         </label>
         <label class="col-lg-6 col-md-6 col-sm-12 col-xs-12 control-label">
           Lastname
-          <input ngControl="lastname" [(ngModel)]="donor.lastname.model" required class="form-control"
-          #lastname="ngForm">
+          <input ngControl="lastName" [(ngModel)]="donor.lastName.model" required class="form-control"
+          #lastName="ngForm">
           <div [hidden]="lastName.valid || lastName.pristine" class="error-msg alert alert-danger">
              {{donor.lastName.getErrorMsg()}}
           </div>
@@ -52,7 +52,7 @@ from "../../../services/fsd-donor-resource.service";
           <input (ngModelChange)="donor.contactNumber.validate()"  ngControl="contactNumber" required [(ngModel)]="donor.contactNumber.model" 
           class="{{donor.contactNumber.isValid()?'valid':'invalid'}} form-control" #contactNumber="ngForm">
           <div [hidden]="contactNumber.valid || contactNumber.pristine" class="error-msg alert alert-danger">
-             {{!!donor.contactNumber.model ?donor.contactNumber.getValidationMsg() :donor.contactNumber.getErrorMsg()}}
+             {{!!donor.contactNumber.model?donor.contactNumber.getValidationMsg():donor.contactNumber.getErrorMsg()}}
           </div>
           <div [hidden]="contactNumber.pristine" *ngIf="!donor.contactNumber.isValid()" class="error-msg alert alert-danger">
              {{donor.contactNumber.getValidationMsg()}}
@@ -93,16 +93,15 @@ from "../../../services/fsd-donor-resource.service";
           <button class="btn btn-primary" type="submit">Register</button>
         </div>
       </div>
-    </form>
-  `
+    </form>`
 })
 export class FsdDonorFormComponent implements OnInit {
-  @Output() onSaved: EventEmitter<any> = new EventEmitter();
+  @Output() onSaved = new EventEmitter();
   @Input() pointer: any;
-  donor: FsdDonor = new FsdDonorImpl();
-  error: any;
+  donor: FsdDonorImpl = new FsdDonorImpl();
   private donorLocation: FsdDonorLocation;
   active: Boolean = false;
+  error: any;
   constructor(private fsdDonorResource: FsdDonorResourceService) { }
   ngOnInit() {
     setTimeout(() => {
@@ -115,33 +114,30 @@ export class FsdDonorFormComponent implements OnInit {
       if (err) {
         this.error = err;
       } else {
-         onSaved.emit(response);
+        this.onSaved.emit(response);
       }
     });
   }
   private convertPoiterToDonorLocation() {
-    let donorLocation = new FsdDonorLocation();
+    this.donorLocation = new FsdDonorLocation();
     let mapPoint = this.pointer.mapPoint;
-    donorLocation.x = mapPoint.x;
-    donorLocation.y = mapPoint.y;
-    donorLocation.z = mapPoint.z;
-    donorLocation.hasM = mapPoint.hasM;
-    donorLocation.hasZ = mapPoint.hasZ;
-    donorLocation.latitude = mapPoint.latitude;
-    donorLocation.longitude = mapPoint.longitude;
-    donorLocation.m = mapPoint.m;
-    donorLocation.sr_isWebMercator = mapPoint.spatialReference.isWebMercator;
-    donorLocation.sr_isWGS84 = mapPoint.spatialReference.isWGS84;
-    donorLocation.sr_isWrappable = mapPoint.spatialReference.isWrappable;
-    donorLocation.sr_latestWkid = mapPoint.spatialReference.latestWkid;
-    donorLocation.sr_wkid = mapPoint.spatialReference.wkid;
+    this.donorLocation.x = mapPoint.x;
+    this.donorLocation.y = mapPoint.y;
+    this.donorLocation.z = mapPoint.z;
+    this.donorLocation.hasM = mapPoint.hasM;
+    this.donorLocation.hasZ = mapPoint.hasZ;
+    this.donorLocation.latitude = mapPoint.latitude;
+    this.donorLocation.longitude = mapPoint.longitude;
+    this.donorLocation.m = mapPoint.m;
+    this.donorLocation.sr_isWebMercator = mapPoint.spatialReference.isWebMercator;
+    this.donorLocation.sr_isWGS84 = mapPoint.spatialReference.isWGS84;
+    this.donorLocation.sr_isWrappable = mapPoint.spatialReference.isWrappable;
+    this.donorLocation.sr_latestWkid = mapPoint.spatialReference.latestWkid;
+    this.donorLocation.sr_wkid = mapPoint.spatialReference.wkid;
   }
-  private createRegisterDonorInput(): {
-    donor: FsdDonor,
-    donorLocation: FsdDonorLocation
-  } {
+  private createRegisterDonorInput() {
     return {
-      donor: this.donor,
+      donor: this.donor.get(),
       donorLocation: this.donorLocation
     };
   }
@@ -158,7 +154,7 @@ export class FsdDonorImpl implements FsdDonor {
     return !!this.regex.contact.test(model);
   });
   bloodGroup: FormModel = new FormModel(true, "Blood group is required");
-  get(): FsdDonor {
+  get() {
     return {
       firstName: this.firstName.model,
       lastName: this.lastName.model,
@@ -193,9 +189,10 @@ export interface FsdDonor {
   bloodGroup: any;
 }
 export class FormModel {
-  public model: any;
+  model: any;
   private valid: Boolean = true;
-  constructor(private required?: Boolean, private errorMsg?: string, private validationMsg?: string, private validator?: (model: any) => Boolean) {}
+  constructor(private required?: Boolean, private errorMsg?: string, private validationMsg?: string, private validator?: (model: any) => Boolean) {
+  }
   getErrorMsg() {
     return this.errorMsg;
   }
@@ -216,7 +213,6 @@ export class FormModel {
   getValidationMsg() {
     return this.validationMsg;
   }
-
 }
 export class Regex {
   public email: RegExp = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;

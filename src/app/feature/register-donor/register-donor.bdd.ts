@@ -19,7 +19,6 @@ describe("Register donor BDD", () => {
             }
             return done();
         }
-
         if (mongoose.connection.readyState === 0) {
             mongoose.connect(database.testUrl, function (err) {
                 if (err) {
