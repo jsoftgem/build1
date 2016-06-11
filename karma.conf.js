@@ -10,7 +10,7 @@ module.exports = function(config) {
         colors: true,
         browsers: ['PhantomJS'],
         // Karma plugins loaded
-        plugins: [
+        plugins: [ 
             'karma-jasmine',
             'karma-coverage',
             'karma-phantomjs-launcher'

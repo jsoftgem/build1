@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "gulp": "./node_modules/.bin/gulp",
     "start": "node ./dist/app/server",
-    "postinstall": "tsd install"
+    "postinstall": "tsd install",
+    "develop-client":"gulp develop-client"
   },
   "keywords": [
     "guild",

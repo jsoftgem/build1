@@ -2,16 +2,15 @@
 1 verbose cli [ '/home/ubuntu/.nvm/versions/node/v4.4.5/bin/node',
 1 verbose cli   '/home/ubuntu/.nvm/versions/node/v4.4.5/bin/npm',
 1 verbose cli   'run',
-1 verbose cli   'gulp',
 1 verbose cli   'develop-client' ]
 2 info using npm@2.15.5
 3 info using node@v4.4.5
-4 verbose run-script [ 'pregulp', 'gulp', 'postgulp' ]
-5 info pregulp build1@1.0.0
-6 info gulp build1@1.0.0
+4 verbose run-script [ 'predevelop-client', 'develop-client', 'postdevelop-client' ]
+5 info predevelop-client build1@1.0.0
+6 info develop-client build1@1.0.0
 7 verbose unsafe-perm in lifecycle true
-8 info build1@1.0.0 Failed to exec gulp script
-9 verbose stack Error: build1@1.0.0 gulp: `gulp "develop-client"`
+8 info build1@1.0.0 Failed to exec develop-client script
+9 verbose stack Error: build1@1.0.0 develop-client: `gulp develop-client`
 9 verbose stack Exit status 1
 9 verbose stack     at EventEmitter.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/utils/lifecycle.js:217:16)
 9 verbose stack     at emitTwo (events.js:87:13)
@@ -24,17 +23,17 @@
 10 verbose pkgid build1@1.0.0
 11 verbose cwd /home/ubuntu/workspace
 12 error Linux 4.2.0-c9
-13 error argv "/home/ubuntu/.nvm/versions/node/v4.4.5/bin/node" "/home/ubuntu/.nvm/versions/node/v4.4.5/bin/npm" "run" "gulp" "develop-client"
+13 error argv "/home/ubuntu/.nvm/versions/node/v4.4.5/bin/node" "/home/ubuntu/.nvm/versions/node/v4.4.5/bin/npm" "run" "develop-client"
 14 error node v4.4.5
 15 error npm  v2.15.5
 16 error code ELIFECYCLE
-17 error build1@1.0.0 gulp: `gulp "develop-client"`
+17 error build1@1.0.0 develop-client: `gulp develop-client`
 17 error Exit status 1
-18 error Failed at the build1@1.0.0 gulp script 'gulp "develop-client"'.
+18 error Failed at the build1@1.0.0 develop-client script 'gulp develop-client'.
 18 error This is most likely a problem with the build1 package,
 18 error not with npm itself.
 18 error Tell the author that this fails on your system:
-18 error     gulp "develop-client"
+18 error     gulp develop-client
 18 error You can get information on how to open an issue for this project with:
 18 error     npm bugs build1
 18 error Or if that isn't available, you can get their info via:

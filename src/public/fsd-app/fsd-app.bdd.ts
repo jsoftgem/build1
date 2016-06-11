@@ -6,42 +6,79 @@ import {
 }
 from "./fsd-map/fsd-sidebar/fsd-donor-form/fsd-donor-form.component";
 import {
-    async,
+    FsdDonorResourceService
+}
+from "./services/fsd-donor-resource.service";
+import {
     beforeEach,
     describe,
     expect,
     inject,
     injectAsync,
-    TestComponentBuilder,
+    it,
     beforeEachProviders
 }
 from "@angular/core/testing";
 import {
+    TestComponentBuilder
+}
+from "@angular/compiler/testing";
+import {
     Http,
     BaseRequestOptions,
     Response,
-    XHRBackend
+    XHRBackend,
+    Headers,
+    HTTP_PROVIDERS,
+    Response
 }
 from "@angular/http";
 import {
-    MockBackend,
-    MockConnection,
-    ResponseOptions
+    MockBackend
 }
 from "@angular/http/testing";
 import {
     Injector,
-    provide
+    provide,
+    Component
 }
 from "@angular/core";
-
-
+import {
+    getDOM
+}
+from "@angular/platform-browser/src/dom/dom_adapter";
 export function main() {
     describe("Create donor BDD", () => {
         let donor: FsdDonor;
         let donorLocation: FsdDonorLocation;
         let pointer: any = {};
         let fsdFormComponent: FsdDonorFormComponent;
+        let testComponent: TestFsdFormComponent;
+        let tcb: TestComponentBuilder;
+        beforeEachProviders(() => [HTTP_PROVIDERS,
+            provide(XHRBackend, {
+                useClass: MockBackend
+            }),
+            TestComponentBuilder,
+            FsdDonorResourceService,
+            FsdDonorFormComponent,
+            TestFsdFormComponent
+        ]);
+        beforeEach(inject([TestComponentBuilder], _tcb => {
+            tcb = _tcb;
+        }));
+
+        beforeEach(done => {
+            tcb.createAsync(TestFsdFormComponent)
+                .then((fixture: any) => {
+                    fixture.detectChanges();
+                    testComponent = fixture.componentInstance;
+                    fsdFormComponent = fixture.debugElement.children[0].componentInstance;
+                    expect(fsdFormComponent).toBeDefined();
+                    expect(testComponent).toBeDefined();
+                    done();
+                });
+        });
         describe("GIVEN: I have donor information", () => {
             beforeEach(() => {
                 donor = new FsdDonorImpl();
@@ -51,6 +88,7 @@ export function main() {
                 donor.emailAddress.model = "rickzx98@gmail.com";
                 donor.address.model = "Manila, Philippines";
                 donor.bloodGroup.model = "o";
+                fsdFormComponent.donor = donor;
             });
             describe("GIVEN: I have donor location", () => {
                 beforeEach(() => {
@@ -61,39 +99,17 @@ export function main() {
                     pointer.mapPoint.z = 4;
                     pointer.mapPoint.latitude = 123.32;
                     pointer.mapPoint.longitude = 923.2;
+                    fsdFormComponent.pointer = pointer;
                 });
                 describe("WHEN: submitting successfully", () => {
-                    beforeEachProviders(() => {
-                        return [XHRBackend,
-                            provide(XHRBackend, {
-                                useClass: MockBackend
-                            })
-                        ];
+                    beforeEach((done) => {
+                        testComponent.onSaved = (response) => {
+                            console.log("response", response);
+                            done();
+                        };
+                        fsdFormComponent.onSubmit();
                     });
-                    beforeEach(injectAsync([XHRBackend], (mockBackend) => {
-                        mockBackend.connections.subscribe(
-                            (connection: MockConnection) => {
-                                new ResponseOptions({
-                                    body: [registerDonorMockResponse]
-                                });
-                                console.log("Create Donor BDD", "beforeEach");
-                            });
-                    }));
-                    it("THEN: Donor is return with object id", injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
-                        return tcb.createAsync(FsdDonorFormComponent).
-                        then(fixture => {
-                            fsdFormComponent = fixture.componentInstance;
-                            fsdFormComponent.donor = donor;
-                            fsdFormComponent.pointer = pointer;
-                            fsdFormComponent.onSubmit();
-                            fsdFormComponent.onSaved.subscribe(res => {
-                                console.log("onSave", res);
-                                expect(res).toBeDefined();
-                            });
-                            console.log("Create Donor BDD", "onSubmit");
-                            expect(fsdFormComponent).toBeDefined();
-                        });
-                    }));
+                    it("THEN: Donor is return with object id", () => {});
                 });
             });
         });
@@ -116,4 +132,15 @@ export function main() {
             longitude: 234.32
         }
     };
+}
+
+@Component({
+    selector: "test-fsd-form",
+    template: `<fsd-donor-form (onSaved)="onSaved($event)" [(pointer)]="pointer"></fsd-donor-form>`,
+    directives: [FsdDonorFormComponent]
+})
+
+export class TestFsdFormComponent {
+    onSaved(response: any) {}
+    pointer: any;
 }

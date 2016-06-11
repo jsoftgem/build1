@@ -111,7 +111,7 @@ export class FsdDonorFormComponent implements OnInit {
   }
   onSubmit() {
     this.convertPoiterToDonorLocation();
-    fsdDonorResource.register(this.createRegisterDonorInput(), (err, response) => {
+    this.fsdDonorResource.register(this.createRegisterDonorInput(), (err, response) => {
       if (err) {
         this.error = err;
       } else {
