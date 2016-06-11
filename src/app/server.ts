@@ -11,7 +11,11 @@ let db = new Database();
 let index = new Index();
 
 const PORT = process.env.port || 3000;
-mongoose.connect(db.url);
+mongoose.connect(db.url, {
+    reconnectTries: 30, socketOptions: {
+        connectTimeoutMS: 10000
+    }
+});
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({
     extended: true

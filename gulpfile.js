@@ -18,7 +18,9 @@ const path = require('path');
 gulp.task('default', function() {
     runSequence('clean', 'concat-client-vendor', 'concat-client-css-vendor', 'copy-client-font-vendor', 'tslint-client', 'compile-client', 'test-client', 'compile-sass', 'tslint-server', 'compile-server', 'test-server', 'run-server', 'watch');
 });
-
+gulp.task('install', function() {
+    runSequence('clean', 'concat-client-vendor', 'concat-client-css-vendor', 'copy-client-font-vendor', 'tslint-client', 'compile-client', 'test-client', 'compile-sass', 'tslint-server', 'compile-server', 'test-server', 'run-server');
+});
 gulp.task('clean', function() {
     return gulp.src(path.join(variableConfig.dist))
         .pipe(clean({
